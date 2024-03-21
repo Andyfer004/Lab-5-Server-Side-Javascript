@@ -22,5 +22,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    camelcase: 'off',
+    'no-console': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
   },
 };
