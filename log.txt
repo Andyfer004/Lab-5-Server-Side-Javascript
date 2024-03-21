@@ -16,3 +16,23 @@ Response: Circular structure in response
 Payload: ""
 Response: ""
 
+2024-03-21T18:33:44.952Z - Endpoint: Server is running on port 8080
+Payload: ""
+Response: ""
+
+2024-03-21T18:34:48.452Z - Endpoint: Server is running on port 8080
+Payload: ""
+Response: ""
+
+2024-03-21T19:14:42.819Z - Endpoint: Server is running on port 8080
+Payload: ""
+Response: ""
+
+2024-03-21T19:19:14.091Z - Endpoint: Server is running on port 8080
+Payload: ""
+Response: ""
+
+2024-03-21T19:19:22.767Z - Endpoint: /cars
+Payload: {}
+Response: Circular structure in response
+

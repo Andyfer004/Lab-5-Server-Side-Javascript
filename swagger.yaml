@@ -1,0 +1,264 @@
+openapi: 3.0.0
+info:
+  title: Mi API
+  description: Descripción de la API que maneja posts y autos.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/
+paths:
+  /posts:
+    get:
+      summary: Obtiene todos los posts
+      responses:
+        '200':
+          description: Lista de todos los posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      summary: Crea un nuevo post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCreate'
+      responses:
+        '200':
+          description: Nuevo post creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  /posts/{postId}:
+    get:
+      summary: Obtiene un post específico por su ID
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del post solicitado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    put:
+      summary: Actualiza un post específico por su ID
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostUpdate'
+      responses:
+        '200':
+          description: Post actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    delete:
+      summary: Elimina un post específico por su ID
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Post eliminado correctamente
+  /cars:
+    get:
+      summary: Obtiene todos los autos
+      responses:
+        '200':
+          description: Lista de todos los autos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+    post:
+      summary: Crea un nuevo auto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarCreate'
+      responses:
+        '200':
+          description: Nuevo auto creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+  /cars/{carId}:
+    get:
+      summary: Obtiene un auto específico por su ID
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del auto solicitado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+    put:
+      summary: Actualiza un auto específico por su ID
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarUpdate'
+      responses:
+        '200':
+          description: Auto actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+    delete:
+      summary: Elimina un auto específico por su ID
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Auto eliminado correctamente
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        contenido:
+          type: string
+        fecha_publicacion:
+          type: string
+          format: date-time
+        imagen_base64:
+          type: string
+        carro_id:
+          type: string
+      required:
+        - titulo
+        - contenido
+        - fecha_publicacion
+    PostCreate:
+      type: object
+      properties:
+        titulo:
+          type: string
+        contenido:
+          type: string
+        fecha_publicacion:
+          type: string
+          format: date-time
+        imagen_base64:
+          type: string
+        carro_id:
+          type: string
+      required:
+        - titulo
+        - contenido
+        - fecha_publicacion
+    PostUpdate:
+      type: object
+      properties:
+        titulo:
+          type: string
+        contenido:
+          type: string
+        fecha_publicacion:
+          type: string
+          format: date-time
+        imagen_base64:
+          type: string
+        carro_id:
+          type: string
+    Car:
+      type: object
+      properties:
+        id:
+          type: string
+        marca:
+          type: string
+        modelo:
+          type: string
+        anio:
+          type: integer
+        descripcion:
+          type: string
+        imagen_base64:
+          type: string
+      required:
+        - marca
+        - modelo
+        - anio
+        - descripcion
+    CarCreate:
+      type: object
+      properties:
+        marca:
+          type: string
+        modelo:
+          type: string
+        anio:
+          type: integer
+        descripcion:
+          type: string
+        imagen_base64:
+          type: string
+      required:
+        - marca
+        - modelo
+        - anio
+        - descripcion
+    CarUpdate:
+      type: object
+      properties:
+        marca:
+          type: string
+        modelo:
+          type: string
+        anio:
+          type: integer
+        descripcion:
+          type: string
+        imagen_base64:
+          type: string
+
