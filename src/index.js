@@ -101,7 +101,7 @@ app.get('/cars/:carId', async (req, res) => {
 app.post('/posts', async (req, res) => {
   // Extrae los datos del post del cuerpo de la solicitud
   const {
-    titulo, contenido, fecha_publicacion, imagen_base64, carro_id,
+    titulo, contenido, fecha_publicacion, imagen_url,
   } = req.body;
 
   // Realiza validaciones básicas; puedes expandirlas según sea necesario
@@ -112,26 +112,30 @@ app.post('/posts', async (req, res) => {
   try {
     // Inserta el nuevo post en la base de datos
     const result = await conn.query(
-      'INSERT INTO Posts (titulo, contenido, fecha_publicacion, imagen_base64, carro_id) VALUES (?, ?, ?, ?, ?)',
-      [titulo, contenido, fecha_publicacion, imagen_base64, carro_id],
+      'INSERT INTO Posts (titulo, contenido, fecha_publicacion, imagen_url) VALUES (?, ?, ?, ?)',
+      [titulo, contenido, fecha_publicacion, imagen_url],
     );
 
     // Obtén el ID del nuevo post
-    const postId = result[0].insertId;
+    const postId = result.insertId;
 
     // Retorna el nuevo post; realiza otra consulta para obtener los datos recién insertados
     const [rows] = await conn.query('SELECT * FROM Posts WHERE id = ?', [postId]);
 
     if (rows.length > 0) {
-      res.status(200).json(rows[0]);
+      const newPost = rows[0];
+      // Se envía la respuesta con el código 201 (Created) y se devuelve el nuevo post
+      res.status(201).json(newPost);
     } else {
-      res.status(404).send('Post creado pero no encontrado');
+      // Si por alguna razón no se encuentra el post recién creado, se envía un error 500
+      res.status(500).send('Error al recuperar el post recién creado');
     }
   } catch (error) {
     console.error('Error al crear el post:', error);
+    // Se envía un error 500 si ocurre algún problema durante la inserción del post
     res.status(500).send('Error interno del servidor');
   }
-  writeToLog('/posts', req.body, res);
+  writeToLog('/cars', req.body, res);
   return { message: 'La función ha terminado correctamente' };
 });
 
